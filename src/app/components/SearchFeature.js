@@ -1,22 +1,16 @@
 import { forwardRef, useState } from 'react';
 import { 
   Input, Box, InputGroup, InputLeftElement, InputRightElement, 
-  Flex, Button, Kbd, Stack, Popover, PopoverTrigger, PopoverContent ,
-
- 
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
+  Flex, Button, Kbd, Stack, Popover, PopoverTrigger, PopoverContent,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
+import TrendingSearchFeature from '../components/TrendingSearchFeature'
+
 
 const SearchFeature = forwardRef((props, ref) => {
 
-  const inputWidth = {  md: '900px' };
-  const popoverDisplay = { 'none', md: 'block' };
+  const inputWidth = { base: '100vw', md: '900px' };
+  const popoverDisplay = { base: 'hidden',  md: 'block' };
 
   return (
     <Box width="full" px={4}>
@@ -31,17 +25,34 @@ const SearchFeature = forwardRef((props, ref) => {
   fontSize="xl"
   w={inputWidth}
 />
-            <InputRightElement>
-              <Stack direction="row" spacing={1} m={5}>
-                <Kbd>⌘</Kbd>
-                <Kbd>K</Kbd>
-              </Stack>
-            </InputRightElement>
           </InputGroup>
         </PopoverTrigger>
-        <PopoverContent w={inputWidth} h='750px' >
-       
-          
+        <PopoverContent w={inputWidth} h='350px' >
+        <TrendingSearchFeature />
+        <Flex 
+        direction="row" 
+        overflowX={{ base: "auto", md: "visible" }} 
+        py={2} 
+        mb={4} 
+        maxWidth={{ base: "100%", md: "930px" }}
+        justifyContent="center"
+          alignItems="center" >
+        {["Halloween", "Animals", "Disney", "Kids", "Adults", "Christmas", "Valentines", "Adults", "Christmas", "Valentines"].map((category, index) => (
+          <Button 
+            key={index} 
+            mr={2} 
+            variant='solid'
+            colorScheme="cyan"
+            px={3} // Consistent padding
+            fontSize="xs" // Consistent font size
+            minWidth="auto" // Button width adjusts to content
+            maxWidth="150px" // Prevent buttons from becoming too wide
+
+          >
+            {category}
+          </Button>
+        ))}
+          </Flex>
           </PopoverContent>
       </Popover>
       <Flex 
@@ -50,7 +61,7 @@ const SearchFeature = forwardRef((props, ref) => {
         py={2} 
         mb={4} 
         maxWidth={{ base: "100%", md: "930px" }}
-         
+        justifyContent="center" // Center the buttons
         css={{
           scrollbarWidth: { base: 'thin', md: 'none' },
           scrollbarColor: 'rgba(155, 155, 155, 0.7) transparent',
@@ -67,11 +78,12 @@ const SearchFeature = forwardRef((props, ref) => {
           <Button 
             key={index} 
             mr={2} 
-           
             px={3} // Consistent padding
             fontSize="xs" // Consistent font size
             minWidth="auto" // Button width adjusts to content
             maxWidth="150px" // Prevent buttons from becoming too wide
+            variant='solid'
+            colorScheme="cyan"
 
           >
             {category}

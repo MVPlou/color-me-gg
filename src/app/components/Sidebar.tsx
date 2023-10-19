@@ -40,12 +40,19 @@ const LinkItems: Array<LinkItemProps> = [
 
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isSidebarOpen, setSidebarOpen] = React.useState(false); // Add this line
 
-  // Add the handleOpen function here, right after the useDisclosure hook
   const handleOpen = () => {
     console.log("Opening drawer...");
     onOpen();
+    setSidebarOpen(true); // Add this line
   };
+
+  const handleSidebarClose = () => { // Add this function
+    onClose();
+    setSidebarOpen(false);
+  };
+
   return (
     <Box minH="100vh" className='top-0' 
     // bg={useColorModeValue('gray.100', 'gray.900')}
@@ -110,7 +117,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
   return (
     <Box
       as="a"
-      href="coloringpage"
+      href="coloringpages"
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}>
       <Flex

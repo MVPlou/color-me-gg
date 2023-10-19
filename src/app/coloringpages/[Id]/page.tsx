@@ -19,12 +19,29 @@ import {
   FaPrint,
 } from "react-icons/fa";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
-import SearchFeature from ''
-
-
-
+import SearchFeature from '../../components/SearchFeature'
+import SimilarPages from '../../components/SimilarPages'
+import { useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { getColoringPageData } from '../../../lib/supabaseClient';
 
 export default function ColoringPage() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const [coloringPageData, setColoringPageData] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      getColoringPageData(id).then(data => {
+        setColoringPageData(data);
+      }).catch(error => {
+        console.error("Error fetching data:", error);
+      });
+    }
+  }, [id]);
+
+  
+
   return (
     <>
       <Flex
@@ -36,7 +53,7 @@ export default function ColoringPage() {
         pt={{ base: "100px", md: "20px" }}
       >
         <Box maxW={{ base: "100%", sm: "80%", md: "1200px" }}>
-         <
+         <SearchFeature/>
         </Box>
       </Flex>
       <Flex
@@ -60,7 +77,7 @@ export default function ColoringPage() {
             fontSize="2xl" // Increase font size
             fontWeight="bold" // Make the text bold
           >
-            <h1>Police Interceptor</h1>
+            <h1>{coloringPageData}</h1>
           </Box>
 
           {/* Breadcrumb */}
@@ -150,6 +167,15 @@ export default function ColoringPage() {
             <IconButton aria-label="Share" icon={<FaShare />} />
           </Flex>
         </Box>
+      </Flex>
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        w="100%"
+        mt={6} // Optional: Add some margin-top for spacing
+      >
+        <SimilarPages />
       </Flex>
     </>
   );
