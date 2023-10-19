@@ -1,20 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { createClient } from '@supabase/supabase-js'
 
-export async function getColoringPageData(pageId) {
-  const { data, error } = await supabase
-    .from('coloring_pages')
-    .select('*')
-    .eq('id', pageId)
-    .single();
-
-  if (error) {
-    console.error("Error fetching data:", error);
-    return null;
-  }
-
-  return data;
-}
+const supabaseUrl = 'https://ixwekkaygqfnxdviiwtc.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4d2Vra2F5Z3Fmbnhkdmlpd3RjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcyMDI5NjksImV4cCI6MjAxMjc3ODk2OX0.HauASbJshDqNjxrsTHLg904NGVukWuS8vpIutHRcYB8'
+export const supabase = createClient(supabaseUrl, supabaseKey)

@@ -1,5 +1,5 @@
 'use client'
-import React, { ReactNode } from 'react'
+import React from 'react'
 import {
   IconButton,
   Box,
@@ -23,7 +23,7 @@ import {
   FiMenu,
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
-import { ReactText } from 'react'
+import Link from 'next/link'
 
 
 interface LinkItemProps {
@@ -32,7 +32,7 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
+  { name: 'ColoringPages/1', icon: FiTrendingUp },
   { name: 'Explore', icon: FiCompass },
   { name: 'Catergories', icon: FiStar },
   { name: 'Settings', icon: FiSettings },
@@ -114,39 +114,40 @@ interface NavItemProps extends FlexProps {
   children: ReactText
 }
 const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+  const linkPath = children === 'Home' ? '/' : `/${children.toLowerCase()}`;
   return (
-    <Box
-      as="a"
-      href="coloringpages"
-      style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}>
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: 'cyan.400',
-          color: 'white',
-        }}
-        {...rest}>
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: 'white',
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Box>
-  )
+    <Link href={linkPath} passHref>
+      <Box  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+        <Flex
+          align="center"
+          p="4"
+          mx="4"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          _hover={{
+            bg: 'cyan.400',
+            color: 'white',
+          }}
+          {...rest}
+        >
+          {icon && (
+            <Icon
+              mr="4"
+              fontSize="16"
+              _groupHover={{
+                color: 'white',
+              }}
+              as={icon}
+            />
+          )}
+          {children}
+        </Flex>
+      </Box>
+    </Link>
+  );
 }
+
 
 interface MobileProps extends FlexProps {
   onOpen: () => void

@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import {
   Flex,
   Box,
@@ -10,6 +10,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  VStack,
 } from "@chakra-ui/react";
 import {
   FaThumbsUp,
@@ -21,26 +22,26 @@ import {
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import SearchFeature from '../../components/SearchFeature'
 import SimilarPages from '../../components/SimilarPages'
-import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { getColoringPageData } from '../../../lib/supabaseClient';
+import { supabase } from '../../../lib/supabaseClient';
+import { usePathname, useSearchParams, useParams } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
 
 export default function ColoringPage() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get('id');
-  const [coloringPageData, setColoringPageData] = useState(null);
+  const searchParams = useSearchParams()
+  const [coloringPages, setColoringPages] = useState([])
 
   useEffect(() => {
-    if (id) {
-      getColoringPageData(id).then(data => {
-        setColoringPageData(data);
-      }).catch(error => {
-        console.error("Error fetching data:", error);
-      });
+    const fetchColoringPages = async () => {
+      const { data, error } = await supabase.from('coloringpage').select('*')
+      if (error) console.log('Error fetching coloring pages:', error.message)
+      else setColoringPages(data)
     }
-  }, [id]);
+    fetchColoringPages()
+  }, [])
 
-  
+
 
   return (
     <>
@@ -77,7 +78,7 @@ export default function ColoringPage() {
             fontSize="2xl" // Increase font size
             fontWeight="bold" // Make the text bold
           >
-            <h1>{coloringPageData}</h1>
+            <h1></h1>
           </Box>
 
           {/* Breadcrumb */}
@@ -131,18 +132,22 @@ export default function ColoringPage() {
           </Box>
         </Flex>
 
-        {/* Metrics Box */}
+<VStack >  {/* Wrap the ad box and Metrics Box with VStack */}
+  {/* Metrics Box */}
         <Box
-          borderWidth="1px"
+        width="300px"
+        height="250px"
+        borderWidth="1px"
           borderRadius="lg"
-          maxW={{ base: "100%", md: "25%" }}
-          h={{ md: "25vh" }}
-          bg="white"
-          m={{ base: "4 auto", md: "0 0 0 4" }}
+          bg="gray.200"
           p={4}
           className="shadow-lg"
+          alignItems="center"
+    justifyContent="center"
+    display="flex"
         >
-          <Flex align="center" mb={2}>
+          <Text>Description / Stats</Text> 
+          {/* <Flex align="center" mb={2}>
             <Icon as={FaEye} mr={2} />
             <Text>Views: 123</Text>
           </Flex>
@@ -165,8 +170,28 @@ export default function ColoringPage() {
               className="mr-2"
             />
             <IconButton aria-label="Share" icon={<FaShare />} />
-          </Flex>
+          </Flex> */}
         </Box>
+         {/* Ad Box */}
+  <Box
+    width="300px"
+    height="250px"
+    borderWidth="1px"
+    borderRadius="lg"
+    m='10px'
+    bg="gray.200"  // Assuming a light gray background
+      // Optional: add some margin-bottom for spacing
+    className="ad-box"  // Optional: for custom styling or identification
+    alignItems="center"
+    justifyContent="center"
+    display="flex"
+  >
+    <Text>Advertisement</Text>  {/* Placeholder text, replace with your ad content */}
+  </Box>
+</VStack>
+
+
+
       </Flex>
       <Flex
         direction="column"
