@@ -41,10 +41,14 @@ const SearchFeature = forwardRef((props, ref) => {
     };
   }, []);
 
+  SearchFeature.displayName = 'SearchFeature';  // Add this line
+
   return (
     <Box width="full" px={4} ref={containerRef} position='relative'  zIndex="1000" >
       <InputGroup size="lg" mb={4}>
-        <InputLeftElement children={<SearchIcon color="gray.500" />} />
+      <InputLeftElement>
+        <SearchIcon color="gray.500" />  {/* Nest SearchIcon between opening and closing tags */}
+      </InputLeftElement>
         <Input
           ref={ref}
           placeholder="Search for coloring pages..."

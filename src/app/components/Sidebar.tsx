@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { ReactText } from 'react'
 import {
   IconButton,
   Box,
@@ -114,6 +114,11 @@ interface NavItemProps extends FlexProps {
   children: ReactText
 }
 const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+  if (typeof children !== 'string') {
+    // Handle the case where children is not a string, if necessary
+    return null;
+  }
+  
   const linkPath = children === 'Home' ? '/' : `/${children.toLowerCase()}`;
   return (
     <Link href={linkPath} passHref>

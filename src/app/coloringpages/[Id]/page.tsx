@@ -28,19 +28,26 @@ import { usePathname, useSearchParams, useParams } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 
-export default function ColoringPage() {
-  const searchParams = useSearchParams()
-  const [coloringPages, setColoringPages] = useState([])
+interface ColoringPage {
+  id: string;
+  // ... other properties ...
+}
+
+export default function ColoringPageComponent() {  // Renamed to avoid naming conflict with ColoringPage interface
+  const searchParams = useSearchParams();
+  const [coloringPages, setColoringPages] = useState<ColoringPage[]>([]);
 
   useEffect(() => {
     const fetchColoringPages = async () => {
-      const { data, error } = await supabase.from('coloringpage').select('*')
-      if (error) console.log('Error fetching coloring pages:', error.message)
-      else setColoringPages(data)
-    }
-    fetchColoringPages()
-  }, [])
-
+      const { data, error } = await supabase.from('coloringpage').select('*');
+      if (error) {
+        console.log('Error fetching coloring pages:', error.message);
+      } else if (data) {
+        setColoringPages(data);
+      }
+    };
+    fetchColoringPages();
+  }, []);
 
 
   return (
@@ -82,7 +89,7 @@ export default function ColoringPage() {
           </Box>
 
           {/* Breadcrumb */}
-          <Breadcrumb mb={4} start="left">
+          <Breadcrumb mb={4}>
             <BreadcrumbItem>
               <BreadcrumbLink href="/">Home</BreadcrumbLink>
             </BreadcrumbItem>
@@ -94,15 +101,16 @@ export default function ColoringPage() {
             </BreadcrumbItem>
           </Breadcrumb>
           {/* Coloring Page */}
-          <Box
-            borderWidth="1px"
-            borderRadius="lg"
-            flex="1"
-            justify="center"
-            align="center"
-            bg="black"
-            className="shadow-lg rounded-xl"
-          >
+          <Flex
+  borderWidth="1px"
+  borderRadius="lg"
+  flex="1"
+  justifyContent="center"
+  alignItems="center"
+  bg="black"
+  className="shadow-lg rounded-xl"
+>
+<VStack spacing={4} width="full" alignItems="center">
             <Image
               src="https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228"
               alt="Dan Abramov"
@@ -129,7 +137,8 @@ export default function ColoringPage() {
                 variant="solid"
               ></Button>
             </Flex>
-          </Box>
+            </VStack>
+            </Flex>
         </Flex>
 
 <VStack >  {/* Wrap the ad box and Metrics Box with VStack */}
@@ -189,9 +198,6 @@ export default function ColoringPage() {
     <Text>Advertisement</Text>  {/* Placeholder text, replace with your ad content */}
   </Box>
 </VStack>
-
-
-
       </Flex>
       <Flex
         direction="column"
