@@ -6,13 +6,17 @@ const StatsCard = () => {
       borderWidth="1px" 
       borderRadius="lg" 
       padding="2" 
-      maxWidth="400px"
+      bg='white'
+      w="300px"
+      boxShadow='dark-lg'
+        p='2'
     >
       <Text 
         fontWeight="bold" 
         marginBottom="2" 
         borderBottomWidth="1px"
         pb="2"
+       
       >
         Category: 
         <Text 
@@ -20,6 +24,7 @@ const StatsCard = () => {
           fontWeight="normal" 
           display="inline-block" 
           ml="2"
+          
           borderBottomWidth="1px"
         >
           Cars

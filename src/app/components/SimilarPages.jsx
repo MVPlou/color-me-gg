@@ -11,7 +11,7 @@ function SimilarPages() {
   ]; 
 
   return (
-    <Box mt={6}>
+    <Box mt={6} >
       <Text fontSize={{ base: 'xl', sm: '2xl', md: '3xl', lg: '4xl' }}
         fontFamily="monospace"
         fontWeight="bold" 
@@ -25,10 +25,11 @@ function SimilarPages() {
       p={4} // Padding to give some space inside the grid
       borderRadius="md" // Optional: Rounded corners for the grid
       maxW='930px'
+      boxShadow='dark-lg'
       justifyContent="center"
           alignItems="center"
         templateColumns={{
-          base: 'repeat(1, 1fr)', 
+          base: 'repeat(2, 1fr)', 
           sm: 'repeat(2, 1fr)',  
           md: 'repeat(3, 1fr)',  
           lg: 'repeat(4, 1fr)'   
@@ -36,7 +37,7 @@ function SimilarPages() {
         gap={4}
       >
         {similarPagesData.map((page, index) => (
-          <Box key={index} borderWidth="1px" borderRadius="lg" overflow="hidden" maxW="200px"> {/* Adjusted width here */}
+          <Box key={index} borderWidth="1px" borderRadius="lg" overflow="hidden" maxW="200px" boxShadow='dark-lg'> {/* Adjusted width here */}
             <Image src={page.image} alt={page.name} boxSize={{ base: '100%', md: '200px' }} objectFit="cover" />
             <Box p="2">
               <Text>{page.name}</Text>

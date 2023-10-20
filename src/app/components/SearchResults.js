@@ -58,7 +58,8 @@ const SearchImages = [
               alignItems="center"
               borderRadius='12px'
               boxShadow="0 0 0 0 #ff00de" // Initial box-shadow value
-              transition="box-shadow 0.3s ease-in-out" // Smooth transition
+
+      
               _hover={{
                
                 zIndex: 1  // This will ensure the hovered item is on top of the other images

@@ -57,7 +57,7 @@ export default function Sidebar() {
     <Box minH="100vh" className='top-0' 
     // bg={useColorModeValue('gray.100', 'gray.900')}
     position="fixed"
-    zIndex="1000"
+    
     >
       <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
       <Drawer
@@ -67,7 +67,9 @@ export default function Sidebar() {
         returnFocusOnClose={false}
         onOverlayClick={onClose}
         size="full">
-        <DrawerContent>
+        <DrawerContent
+  
+        >
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>

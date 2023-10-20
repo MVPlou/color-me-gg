@@ -86,17 +86,26 @@ export default function ColoringPageComponent() {
         >
           <VStack
             align="center"
-            spacing={4} // Adjust as needed
+            spacing={3} 
+            bg='cyan.200'
+            borderRadius="lg"
+            h='849px'
+            p={4}
             mb={{ base: 4, md: 0 }} // Adds bottom margin on smaller screens
           >
             {/* Title Box */}
             <Box
               mb={1} // Margin bottom to give some space between the title and the image
+              
+            borderRadius="lg"
               textAlign="center" // Center the text
               fontSize="2xl" // Increase font size
-              fontWeight="bold" // Make the text bold
+              fontWeight="bold"
+               // Make the text bold
             >
-              <h1>Police Interceptor</h1>
+             <h1>
+              Police Interceptor
+              </h1>
             </Box>
 
             {/* Breadcrumb */}
@@ -117,16 +126,20 @@ export default function ColoringPageComponent() {
               borderRadius="lg"
               flex="1"
               justifyContent="center"
+              w={{ base: "100%", md: "540px" }} 
               alignItems="center"
               bg="black"
               className="shadow-lg rounded-xl"
             >
-              <VStack spacing={4} width="full" alignItems="center">
+              <VStack spacing={1} width="full" alignItems="center"
+              >
                 <Image
                   src="https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228"
                   alt="Police Transporter"
-                  w={{ base: "100%", md: "500px" }} // Made the width responsive
+                  w={{ base: "100%", md: "540px" }} // Made the width responsive
                   borderRadius="md"
+                  boxShadow='dark-lg'
+     
                 />
                 <Flex
                   gap="2"
@@ -154,20 +167,26 @@ export default function ColoringPageComponent() {
           </VStack>
         </Flex>
         {/*Ad and Stats*/}
-        <VStack>
+        <VStack
+        bg='cyan.200'
+        borderRadius="lg"
+        p={2}
+        m={2}
+        >
           {/* Ad Box */}
           <Box
             width="300px"
             height="600px"
             borderWidth="1px"
             borderRadius="lg"
-            m="5px"
-            bg="gray.200" // Assuming a light gray background
+            p={4}
+            bg="white" // Assuming a light gray background
             // Optional: add some margin-bottom for spacing
             className="ad-box" // Optional: for custom styling or identification
             alignItems="center"
             justifyContent="center"
             display="flex"
+            boxShadow='lg'
           >
             <Text>Advertisement</Text>{" "}
             {/* Placeholder text, replace with your ad content */}
@@ -183,6 +202,7 @@ export default function ColoringPageComponent() {
         align="center"
         w="100%"
         mt={6} // Optional: Add some margin-top for spacing
+        
       >
         <SimilarPages />
       </Flex>

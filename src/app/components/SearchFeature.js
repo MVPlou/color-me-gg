@@ -12,7 +12,7 @@ import { useState, forwardRef, useRef, useEffect } from 'react';
 import SearchResults from '../components/SearchResults'
 
 const SearchFeature = forwardRef((props, ref) => {
-  const inputWidth = { base: '100vw', md: '900px' };
+  const inputWidth = { base: '100vw', md: '905px' };
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
@@ -66,12 +66,13 @@ const SearchFeature = forwardRef((props, ref) => {
           w={inputWidth}
           h='400px'
           bg='gray.100'
-          boxShadow="sm"
+         
           p={4}
           borderRadius="md"
           position="absolute"  // This will position the box absolutely
           top="60px"  // Adjust this value to position the box below the input field
           zIndex="1000"
+          boxShadow='dark-lg'
         >
           {showTrending ? (
             <TrendingSearchFeature />
@@ -98,6 +99,7 @@ const SearchFeature = forwardRef((props, ref) => {
                 fontSize="xs"
                 minWidth="auto"
                 maxWidth="150px"
+                boxShadow='lg'
               >
                 {category}
               </Button>
@@ -134,6 +136,7 @@ const SearchFeature = forwardRef((props, ref) => {
             maxWidth="150px"
             variant='solid'
             colorScheme="cyan"
+            boxShadow='lg'
           >
             {category}
           </Button>

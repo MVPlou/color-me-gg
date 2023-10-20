@@ -14,7 +14,11 @@ interface DescriptionBoxProps {
         borderWidth="1px" // for the box to be visible, optionally add a border
         borderRadius="md" // optional: if you want rounded corners
         padding="4" // optional: for inner padding
-        overflowY="auto" // to make the content scrollable if it exceeds the box height
+        overflowY="auto"
+        bg='white'
+        boxShadow='dark-lg'
+        p='6'
+         // to make the content scrollable if it exceeds the box height
       >
         <Text>{text}</Text> 
       </Box>

@@ -28,7 +28,7 @@ export default function TrendingSearchFeature() {
           px={2} 
           direction="row" 
           spacing={4} 
-  
+
           justifyContent="flex-start"  // Adjust to flex-start to align items at the start
         >
           {trendingImages.map((imgSrc, index) => (

@@ -13,6 +13,7 @@ import GamingPages from './components/GamingPages';
 
 
 
+
 export default function Home() {
 
   const popularPages = [
