@@ -35,7 +35,6 @@ export default function Home() {
    
     // Add more popular pages as needed
   ];
-
   const recentlyAddedPages = [
     { name: 'car.pdf', type: 'cars' },
     { name: 'car.pdf', type: 'cars' },
@@ -53,7 +52,6 @@ export default function Home() {
     { name: 'car.pdf', type: 'cars' },
     // Add more recently added pages as needed
   ];
-
   const seasonalPages = [
     { name: 'santa.pdf', type: 'christmas' },
     { name: 'santa.pdf', type: 'christmas' },
@@ -89,7 +87,6 @@ export default function Home() {
 
     // Add more animal pages as needed
   ];
-
   const gamingPages = [
     { name: 'mario.pdf', type: 'gaming' },
     { name: 'mario.pdf', type: 'gaming' },
@@ -109,6 +106,7 @@ export default function Home() {
    
     // Add more gaming pages as needed
   ];
+  
 
   return (
     <>
