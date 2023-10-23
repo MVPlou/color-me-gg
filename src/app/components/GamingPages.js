@@ -30,7 +30,7 @@ export default function PopularColoringPages({ coloringPages }) {
             key={index}
             width={{ base: '180px', sm: '180px', md: '140px', lg: '160px' }}
             height={{ base: '220px', sm: '220px', md: '180px', lg: '200px' }}
-            bg="white"
+            bg="whiten"
             alignItems="center"
             justifyContent="center"
             flexDirection="column"

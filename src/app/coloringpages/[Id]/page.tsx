@@ -11,6 +11,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   VStack,
+  Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
 } from "@chakra-ui/react";
 import {
   FaThumbsUp,
@@ -39,6 +40,7 @@ interface ColoringPage {
   // ... other properties ...
 }
 
+
 export default function ColoringPageComponent() {
   // Renamed to avoid naming conflict with ColoringPage interface
   const searchParams = useSearchParams();
@@ -55,6 +57,20 @@ export default function ColoringPageComponent() {
     };
     fetchColoringPages();
   }, []);
+
+   // State to manage modal visibility
+ const [isModalOpen, setIsModalOpen] = useState(false);
+
+ // Function to open the modal
+ const openModal = () => {
+   setIsModalOpen(true);
+ };
+
+ // Function to close the modal
+ const closeModal = () => {
+   setIsModalOpen(false);
+ };
+
 
   return (
     <>
@@ -131,15 +147,15 @@ export default function ColoringPageComponent() {
               bg="black"
               className="shadow-lg rounded-xl"
             >
-              <VStack spacing={1} width="full" alignItems="center"
-              >
+              <VStack spacing={1} width="full" alignItems="center">
+                {/* Image with onClick event to open the modal */}
                 <Image
-                  src="https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228"
+                src="https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228"
                   alt="Police Transporter"
-                  w={{ base: "100%", md: "540px" }} // Made the width responsive
+                  w={{ base: "100%", md: "540px" }}
                   borderRadius="md"
                   boxShadow='dark-lg'
-     
+                  onClick={openModal} // Add this line to open the modal when the image is clicked
                 />
                 <Flex
                   gap="2"
@@ -195,6 +211,23 @@ export default function ColoringPageComponent() {
         </VStack>
         {/* <ColoringPagesList /> */}
       </Flex>
+ {/* Add the Modal component */}
+ <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <ModalOverlay />
+        <ModalContent maxWidth='90vh' maxHeight='90vh' >
+          <ModalCloseButton />
+          <ModalBody>
+            <Image
+              src="https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228"
+              alt="Police Transporter"
+              width="80vh" // set width to auto
+              height="80vh"
+              
+            />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
       {/*similar pages*/}
       <Flex
         direction="column"
