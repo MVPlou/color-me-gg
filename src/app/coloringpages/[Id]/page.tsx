@@ -13,13 +13,6 @@ import {
   VStack,
   Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
 } from "@chakra-ui/react";
-import {
-  FaThumbsUp,
-  FaShare,
-  FaEye,
-  FaDownload,
-  FaPrint,
-} from "react-icons/fa";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import SearchFeature from "../../components/SearchFeature";
 import SimilarPages from "../../components/SimilarPages";
@@ -30,6 +23,7 @@ import DescriptionBox from "../../components/DescriptionBox";
 import ColoringPagesList from "../../components/ColoringPagesList";
 import { usePathname, useSearchParams, useParams } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { NextSeo } from "next-seo";
 
 const descriptionText = `
 Description of Coloring page will be displayed here.
@@ -74,6 +68,10 @@ export default function ColoringPageComponent() {
 
   return (
     <>
+   <NextSeo
+        title="Your Dynamic Title Here" // You can also set the title dynamically
+        description="Dynamic Desc"
+      />
       <Flex
         direction="column"
         justify="center"

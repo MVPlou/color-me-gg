@@ -21,6 +21,9 @@ import {
   FiStar,
   FiSettings,
   FiMenu,
+  FiGrid,
+  FiEdit2,
+  FiInfo,
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import Link from 'next/link'
@@ -32,10 +35,11 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', icon: FiHome },
-  { name: 'ColoringPages/1', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Catergories', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
+  { name: 'About Us', icon: FiInfo },
+  { name: 'Catergories', icon: FiGrid },
+  { name: 'ColoringPages/1', icon: FiEdit2 },
+
+ 
 ]
 
 export default function Sidebar() {

@@ -1,6 +1,17 @@
 import { Grid, Flex, Text, Button } from '@chakra-ui/react';
+import { useState } from 'react'; // Import useState
 
 export default function PopularColoringPages({ coloringPages }) {
+ // State to handle the number of items displayed
+ const [itemsToShow, setItemsToShow] = useState(20); // Default to show 10 items
+
+ // Handle the Show More click
+ const handleShowMore = () => {
+   setItemsToShow(itemsToShow + 10); // Show 10 more items each time
+ };
+
+
+
   return (
     <Flex direction="column" alignItems="center" width="100%">
       <Text 
@@ -22,8 +33,9 @@ export default function PopularColoringPages({ coloringPages }) {
         bg="cyan.200" // Added cyan background color
         p={4} // Padding to give some space inside the grid
         borderRadius="md" // Optional: Rounded corners for the grid
+        boxShadow='dark-lg'
       >
-        {coloringPages.map((page, index) => (
+        {coloringPages.slice(0, itemsToShow).map((page, index) => (
           <Flex className='pt-3'
             key={index}
             width={{ base: '180px', sm: '180px', md: '140px', lg: '160px' }}
@@ -41,14 +53,17 @@ export default function PopularColoringPages({ coloringPages }) {
         ))}
       </Grid>
 
-      <Button 
-        mt={6}
-        mb={6} // Margin top for spacing between grid and button
-        colorScheme="cyan" // Chakra UI color scheme for the button
-        size="lg" // Button size
-      >
-        Show More
-      </Button>
+      {itemsToShow < coloringPages.length && (
+        <Button 
+          mt={6}
+          mb={6}
+          colorScheme="cyan"
+          size="lg"
+          onClick={handleShowMore} // Attach the click handler
+        >
+          Show More
+        </Button>
+      )}
     </Flex>
   );
 }

@@ -24,13 +24,14 @@ export default function PopularColoringPages({ coloringPages }) {
         bg="cyan.200" // Added cyan background color
         p={4} // Padding to give some space inside the grid
         borderRadius="md" // Optional: Rounded corners for the grid
+        boxShadow='dark-lg'
       >
         {coloringPages.map((page, index) => (
           <Flex className='pt-3'
             key={index}
             width={{ base: '180px', sm: '180px', md: '140px', lg: '160px' }}
             height={{ base: '220px', sm: '220px', md: '180px', lg: '200px' }}
-            bg="whiten"
+            bg="white"
             alignItems="center"
             justifyContent="center"
             flexDirection="column"
