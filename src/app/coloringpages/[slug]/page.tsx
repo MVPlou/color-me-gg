@@ -24,39 +24,48 @@ import ColoringPagesList from "../../components/ColoringPagesList";
 import { usePathname, useSearchParams, useParams } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { NextSeo } from "next-seo";
+import ColoringPageSkeleton from "../../components/ColoringPageSkeleton";
 
-const descriptionText = `
-Description of Coloring page will be displayed here.
-`; // End of your demo description data.
 
-interface ColoringPage {
+interface ColoringPages {
   id: string;
-  // ... other properties ...
-}
+  title: string;
+  imageUrl: string;
+  description: string;
+  // ... any other properties you might want to add ...
+};
 
 
-const mockData = [
-  {
-    id: '1',
-    title: 'Police Interceptor',
-    imageUrl: 'https://media.discordapp.net/attachments/1140603554369912932/1158187476729483264/mvplou_police_car_coloring_pages_ee10374c-8188-4ad6-a538-a3f91a52cf9f.png?ex=654828a4&is=6535b3a4&hm=baff7e181a2d45917b220007fe0d6d468f9ff65f849567d9fdb45d60cf225ada&=&width=1228&height=1228',
-    description: 'Description for Police Interceptor.',
-  },
-  {
-    id: '2',
-    title: 'Fire Truck',
-    imageUrl: 'https://media.discordapp.net/attachments/1140603554369912932/1158187483322912778/mvplou_police_car_coloring_pages_4e08a52e-fce4-468d-9853-f0cc50361ccc.png?ex=654828a6&is=6535b3a6&hm=02badea06a9c5b65ceadab460d6eb55c2fe23e2ee93e7377a4932592f7c77eeb&=&width=1228&height=1228',
-    description: 'Description for Fire Truck.',
-  },
-  // ... add more mock data ...
-];
+
 
 export default function ColoringPageComponent() {
+  const [coloringPages, setColoringPages] = useState<ColoringPages[]>([]);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const currentPage = mockData[currentPageIndex];
+  const currentPage = coloringPages[currentPageIndex] || {};
+
+
+  const { slug } = useParams(); 
+
+  // It's generally a good idea to put conditional rendering after all hooks and states to abide by the rules of hooks.
+  useEffect(() => {
+    const fetchColoringPages = async () => {
+      const { data, error } = await supabase
+        .from("coloring_pages")
+        .select("*")
+        .eq('slug', slug);
+      if (error) {
+        console.log("Error fetching coloring page:", error.message);
+      } else if (data) {
+        setColoringPages(data);
+      }
+    };
+    if (slug) { // Ensure 'id' is available before fetching
+      fetchColoringPages();
+    }
+  }, [slug]);
 
   const goToNextPage = () => {
-    if (currentPageIndex < mockData.length - 1) {
+    if (currentPageIndex < coloringPages.length - 1) {
       setCurrentPageIndex(currentPageIndex + 1);
     }
   };
@@ -69,33 +78,24 @@ export default function ColoringPageComponent() {
 
   // Renamed to avoid naming conflict with ColoringPage interface
   const searchParams = useSearchParams();
-  const [coloringPages, setColoringPages] = useState<ColoringPage[]>([]);
 
-  useEffect(() => {
-    const fetchColoringPages = async () => {
-      const { data, error } = await supabase.from("coloringpage").select("*");
-      if (error) {
-        console.log("Error fetching coloring pages:", error.message);
-      } else if (data) {
-        setColoringPages(data);
-      }
-    };
-    fetchColoringPages();
-  }, []);
+  // State to manage modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-   // State to manage modal visibility
- const [isModalOpen, setIsModalOpen] = useState(false);
+  // Function to open the modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
- // Function to open the modal
- const openModal = () => {
-   setIsModalOpen(true);
- };
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
- // Function to close the modal
- const closeModal = () => {
-   setIsModalOpen(false);
- };
+  // Now, you can put your conditional rendering.
+  // if (!coloringPages.length) return <ColoringPageSkeleton />;
 
+  // ... Rest of the component logic and JSX ...
 
   return (
     <>
@@ -159,7 +159,7 @@ export default function ColoringPageComponent() {
                 <BreadcrumbLink href="/">Home</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                <BreadcrumbLink href="#">Coloring Pages</BreadcrumbLink>
+                <BreadcrumbLink href="/catergories">Coloring Pages</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem isCurrentPage>
                 <BreadcrumbLink href="#">{currentPage.title}</BreadcrumbLink>
@@ -182,6 +182,7 @@ export default function ColoringPageComponent() {
                  src={currentPage.imageUrl}
                  alt={currentPage.title}
                   w={{ base: "100%", md: "540px" }}
+                  h='600px'
                   borderRadius="md"
                   boxShadow='dark-lg'
                   onClick={openModal} // Add this line to open the modal when the image is clicked
@@ -239,7 +240,7 @@ export default function ColoringPageComponent() {
           <ModalCloseButton />
           <ModalBody>
             <Image
-              src="https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228"
+              src={currentPage.imageUrl}
               alt="Police Transporter"
               width="80vh" // set width to auto
               height="80vh"

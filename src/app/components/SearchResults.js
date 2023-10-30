@@ -68,7 +68,7 @@ const SearchImages = [
               maxWidth="200px" // Ensure a maximum width for each item
             >
               <Box boxSize="190px">
-                <img src={imgSrc} alt={`Trending Image ${index}`} width="200" height="150" />
+                <Image src={imgSrc} alt={`Trending Image ${index}`} width="200" height="150" />
               </Box>
               <p>Image {index + 1}</p> {/* This is the text box below the image */}
             </VStack>

@@ -1,4 +1,4 @@
-import { Flex, Box, Text, VStack } from "@chakra-ui/react";
+import { Flex, Box, Text, VStack, Image } from "@chakra-ui/react";
 
 
 
@@ -47,7 +47,7 @@ export default function TrendingSearchFeature() {
               maxWidth="200px" // Ensure a maximum width for each item
             >
               <Box boxSize="190px" borderRadius="lg">
-                <img src={imgSrc} alt={`Trending Image ${index}`} width="200" height="150" />
+                <Image src={imgSrc} alt={`Trending Image ${index}`} width="200" height="150" />
               </Box>
               <Text>Image {index + 1}</Text> {/* This is the text box below the image */}
             </VStack>
