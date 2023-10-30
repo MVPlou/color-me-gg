@@ -7,7 +7,7 @@ interface Category {
   slug: any;
   id: number;
   name: string;
-  imageurl?: string; // This is the URL of the image
+  thumbnail_imageurl?: string; // This is the URL of the image
   count: number;
 }
 
@@ -64,7 +64,7 @@ const CategoriesComponent: React.FC<CategoriesComponentProps> = ({ categories })
       
       // ... other Flex props
     >
-      {category.imageurl && <Image src={category.imageurl} alt={category.name} h='300px'  borderRadius="xl"
+      {category.thumbnail_imageurl && <Image src={category.thumbnail_imageurl} alt={category.name} h='300px'  borderRadius="xl"
             boxShadow='lg' mb={2} />}
       <Text>
         {category.name} ({category.count})
