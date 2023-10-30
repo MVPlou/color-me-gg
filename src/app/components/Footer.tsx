@@ -46,7 +46,7 @@ const SocialButton = ({
 export default function SmallWithSocial() {
   return (
     <Box
-    position='fixed'
+  
     bottom='0'
     width='full'
       bg={useColorModeValue('gray.50', 'gray.900')}

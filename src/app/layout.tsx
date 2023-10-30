@@ -1,6 +1,7 @@
 // app/layout.tsx
 import { Providers } from "../app/providers";
 import Sidebar from "./components/Sidebar";
+import Footer from "../app/components/Footer"
 
 
 
@@ -15,6 +16,7 @@ export default function RootLayout({
         <Providers>
          <Sidebar/>
           {children}
+          <Footer/>
         </Providers>
       </body>
     </html>

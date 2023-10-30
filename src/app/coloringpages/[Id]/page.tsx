@@ -35,7 +35,38 @@ interface ColoringPage {
 }
 
 
+const mockData = [
+  {
+    id: '1',
+    title: 'Police Interceptor',
+    imageUrl: 'https://media.discordapp.net/attachments/1140603554369912932/1158187476729483264/mvplou_police_car_coloring_pages_ee10374c-8188-4ad6-a538-a3f91a52cf9f.png?ex=654828a4&is=6535b3a4&hm=baff7e181a2d45917b220007fe0d6d468f9ff65f849567d9fdb45d60cf225ada&=&width=1228&height=1228',
+    description: 'Description for Police Interceptor.',
+  },
+  {
+    id: '2',
+    title: 'Fire Truck',
+    imageUrl: 'https://media.discordapp.net/attachments/1140603554369912932/1158187483322912778/mvplou_police_car_coloring_pages_4e08a52e-fce4-468d-9853-f0cc50361ccc.png?ex=654828a6&is=6535b3a6&hm=02badea06a9c5b65ceadab460d6eb55c2fe23e2ee93e7377a4932592f7c77eeb&=&width=1228&height=1228',
+    description: 'Description for Fire Truck.',
+  },
+  // ... add more mock data ...
+];
+
 export default function ColoringPageComponent() {
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const currentPage = mockData[currentPageIndex];
+
+  const goToNextPage = () => {
+    if (currentPageIndex < mockData.length - 1) {
+      setCurrentPageIndex(currentPageIndex + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPageIndex > 0) {
+      setCurrentPageIndex(currentPageIndex - 1);
+    }
+  };
+
   // Renamed to avoid naming conflict with ColoringPage interface
   const searchParams = useSearchParams();
   const [coloringPages, setColoringPages] = useState<ColoringPage[]>([]);
@@ -118,7 +149,7 @@ export default function ColoringPageComponent() {
                // Make the text bold
             >
              <h1>
-              Police Interceptor
+             {currentPage.title}
               </h1>
             </Box>
 
@@ -131,7 +162,7 @@ export default function ColoringPageComponent() {
                 <BreadcrumbLink href="#">Coloring Pages</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem isCurrentPage>
-                <BreadcrumbLink href="#">Police Interceptor</BreadcrumbLink>
+                <BreadcrumbLink href="#">{currentPage.title}</BreadcrumbLink>
               </BreadcrumbItem>
             </Breadcrumb>
             {/* Coloring Page */}
@@ -148,8 +179,8 @@ export default function ColoringPageComponent() {
               <VStack spacing={1} width="full" alignItems="center">
                 {/* Image with onClick event to open the modal */}
                 <Image
-                src="https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228"
-                  alt="Police Transporter"
+                 src={currentPage.imageUrl}
+                 alt={currentPage.title}
                   w={{ base: "100%", md: "540px" }}
                   borderRadius="md"
                   boxShadow='dark-lg'
@@ -162,22 +193,14 @@ export default function ColoringPageComponent() {
                   width="full"
                   p={4}
                 >
-                  <Button
-                    leftIcon={<ArrowBackIcon />}
-                    colorScheme="teal"
-                    variant="solid"
-                  ></Button>
+                <Button onClick={goToPreviousPage} leftIcon={<ArrowBackIcon />} colorScheme="teal" variant="solid"></Button>
                   <Button colorScheme="blue">Print</Button>
                   <Button colorScheme="green">Download</Button>
-                  <Button
-                    rightIcon={<ArrowForwardIcon />}
-                    colorScheme="teal"
-                    variant="solid"
-                  ></Button>
+                  <Button onClick={goToNextPage} rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="solid"></Button>
                 </Flex>
               </VStack>
             </Flex>
-            <DescriptionBox text={descriptionText} />
+            <DescriptionBox text={currentPage.description} />
           </VStack>
         </Flex>
         {/*Ad and Stats*/}
@@ -232,7 +255,7 @@ export default function ColoringPageComponent() {
         justify="center"
         align="center"
         w="100%"
-        mt={6} // Optional: Add some margin-top for spacing
+        mb='200px' // Optional: Add some margin-top for spacing
         
       >
         <SimilarPages />
