@@ -30,7 +30,7 @@ import ColoringPageSkeleton from "../../components/ColoringPageSkeleton";
 interface ColoringPages {
   id: string;
   title: string;
-  imageUrl: string;
+  imageurl: string;
   description: string;
   // ... any other properties you might want to add ...
 };
@@ -46,7 +46,6 @@ export default function ColoringPageComponent() {
 
   const { slug } = useParams(); 
 
-  // It's generally a good idea to put conditional rendering after all hooks and states to abide by the rules of hooks.
   useEffect(() => {
     const fetchColoringPages = async () => {
       const { data, error } = await supabase
@@ -179,7 +178,7 @@ export default function ColoringPageComponent() {
               <VStack spacing={1} width="full" alignItems="center">
                 {/* Image with onClick event to open the modal */}
                 <Image
-                 src={currentPage.imageUrl}
+                 src={currentPage.imageurl}
                  alt={currentPage.title}
                   w={{ base: "100%", md: "540px" }}
                   h='600px'
@@ -240,8 +239,8 @@ export default function ColoringPageComponent() {
           <ModalCloseButton />
           <ModalBody>
             <Image
-              src={currentPage.imageUrl}
-              alt="Police Transporter"
+              src={currentPage.imageurl}
+              alt={currentPage.title}
               width="80vh" // set width to auto
               height="80vh"
               
@@ -259,7 +258,7 @@ export default function ColoringPageComponent() {
         mb='200px' // Optional: Add some margin-top for spacing
         
       >
-        <SimilarPages />
+        {/* <SimilarPages /> */}
       </Flex>
     </>
   );
