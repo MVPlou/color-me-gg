@@ -9,7 +9,7 @@ import { usePathname, useSearchParams, useParams } from "next/navigation";
 
 
 export default function SubCatergories() {
-  const [subCategories, setSubCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
     const { slug } = useParams(); 
   
