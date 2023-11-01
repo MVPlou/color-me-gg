@@ -11,6 +11,8 @@ import TrendingSearchFeature from '../components/TrendingSearchFeature'
 import { useState, forwardRef, useRef, useEffect } from 'react';
 import SearchResults from '../components/SearchResults'
 import { supabase } from '../../lib/supabaseClient';
+import Link from 'next/link';
+
 
 const SearchFeature = forwardRef((props, ref) => {
   const inputWidth = { base: '100vw', md: '905px' };
@@ -91,7 +93,7 @@ const SearchFeature = forwardRef((props, ref) => {
       {isOpen && (
         <Box
           w={inputWidth}
-          h='400px'
+          h='80vh'
           bg='gray.100'
          
           p={4}
@@ -104,8 +106,8 @@ const SearchFeature = forwardRef((props, ref) => {
           {showTrending ? (
     <TrendingSearchFeature />
   ) : (
-    <SearchResults results={searchResults} />
-  )}
+    <SearchResults results={searchResults} query={inputValue} />
+    )}
           <Flex
             direction="row"
             overflowX={{ base: "auto", md: "visible" }}
@@ -153,21 +155,13 @@ const SearchFeature = forwardRef((props, ref) => {
           },
         }}
       >
-        {["Halloween", "Animals", "Disney", "Kids", "Adults", "Christmas", "Valentines", "Adults", "Christmas", "Valentines"].map((category, index) => (
-          <Button
-            key={index}
-            mr={2}
-            px={3}
-            fontSize="xs"
-            minWidth="auto"
-            maxWidth="150px"
-            variant='solid'
-            colorScheme="cyan"
-            boxShadow='lg'
-          >
-            {category}
-          </Button>
-        ))}
+       {["Halloween", "Animals", "Disney", "Kids", "Adults", "Christmas", "Valentines" ].map((category, index) => (
+  <Link key={index} href={`/categories/${category.toLowerCase()}`} passHref>
+    <Button  mr={2} px={3} fontSize="xs" minWidth="auto" maxWidth="150px" variant='solid' colorScheme="cyan" boxShadow='lg'>
+      {category}
+    </Button>
+  </Link>
+))}
       </Flex>
     </Box>
   );

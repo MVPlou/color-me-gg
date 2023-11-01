@@ -1,10 +1,10 @@
 import { Box, Heading, SimpleGrid, Image, AspectRatio, Flex, VStack } from "@chakra-ui/react";
 
-function SearchResults({ results }) {
+function SearchResults({ results, query }) {
   return (
     <Box width="full" px={4}>
       <Heading as="h3" textAlign="center" mt={3} size="md" mb={4}>
-        Search Results for {results.length > 0 ? results[0].title : "No Query Provided"}
+        Search Results for {query ? `"${query}"` : ""}
       </Heading>
 
       <Flex
@@ -39,8 +39,8 @@ function SearchResults({ results }) {
                 boxShadow: '0 0 0 1px #ff00de',
               }}
             >
-              <AspectRatio ratio={1} width="100px">
-                <Image src={coloringItem.imageurl ? coloringItem.imageurl : "https://via.placeholder.com/100"} alt={coloringItem.title} objectFit="cover" borderRadius="8px" />
+              <AspectRatio ratio={1} width="210px">
+                <Image src={coloringItem.imageurl ? coloringItem.imageurl : "https://via.placeholder.com/100"} alt={coloringItem.title} w="210px" h='210px' objectFit="cover" borderRadius="8px" p={1} />
               </AspectRatio>
               <Box textAlign="center" mt={2}>
                 {coloringItem.title}

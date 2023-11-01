@@ -1,14 +1,26 @@
-// components/SimilarPages.js
 import { Box, Text, Grid, Image } from "@chakra-ui/react";
+import { supabase } from '../../lib/supabaseClient'
+import { useState, useEffect } from "react";
 
-function SimilarPages() {
-  const similarPagesData = [
-    { name: 'Car', image: 'https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228' },
-    { name: 'Truck', image: 'https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228' },
-    { name: 'Car', image: 'https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228' },
-    { name: 'Truck', image: 'https://media.discordapp.net/attachments/1140603554369912932/1158187497348681748/mvplou_police_car_coloring_pages_32dcc634-6567-446f-8f83-4dce680f1a4f.png?ex=651ea169&is=651d4fe9&hm=25f76f61b12c151e83201674238bbf1301edbd9db306c082168a34e5dbd0275b&=&width=1228&height=1228' },
-    // ... add more similar pages as needed
-  ]; 
+function SimilarPages({ categoryId }) {
+  const [similarPagesData, setSimilarPagesData] = useState([]);
+
+  useEffect(() => {
+    async function fetchSimilarPages() {
+      let { data, error } = await supabase
+        .from('coloring_pages')  // Replace with your table's name
+        .select('*')
+        .eq('categoryId', categoryId);
+      
+      if (error) {
+        console.error('Error fetching similar pages: ', error);
+      } else if (data) {
+        setSimilarPagesData(data);
+      }
+    }
+
+    fetchSimilarPages();
+  }, [categoryId]);
 
   return (
     <Box mt={6} >
@@ -21,13 +33,13 @@ function SimilarPages() {
         p={4}
       >Similar Pages</Text>
       <Grid
-      bg="cyan.200"
-      p={4} // Padding to give some space inside the grid
-      borderRadius="md" // Optional: Rounded corners for the grid
-      maxW='930px'
-      boxShadow='dark-lg'
-      justifyContent="center"
-          alignItems="center"
+        bg="cyan.200"
+        p={4}
+        borderRadius="md"
+        maxW='930px'
+        boxShadow='dark-lg'
+        justifyContent="center"
+        alignItems="center"
         templateColumns={{
           base: 'repeat(2, 1fr)', 
           sm: 'repeat(2, 1fr)',  
@@ -37,7 +49,7 @@ function SimilarPages() {
         gap={4}
       >
         {similarPagesData.map((page, index) => (
-          <Box key={index} borderWidth="1px" borderRadius="lg" overflow="hidden" maxW="200px" boxShadow='dark-lg'> {/* Adjusted width here */}
+          <Box key={index} borderWidth="1px" borderRadius="lg" overflow="hidden" maxW="200px" boxShadow='dark-lg'>
             <Image src={page.image} alt={page.name} boxSize={{ base: '100%', md: '200px' }} objectFit="cover" />
             <Box p="2">
               <Text>{page.name}</Text>

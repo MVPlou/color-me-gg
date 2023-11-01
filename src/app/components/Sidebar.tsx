@@ -37,7 +37,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', icon: FiHome },
   { name: 'About Us', icon: FiInfo },
   { name: 'Categories', icon: FiGrid },
-  { name: 'ColoringPages/1', icon: FiEdit2 },
+  // { name: 'ColoringPages/1', icon: FiEdit2 },
 
  
 ]
