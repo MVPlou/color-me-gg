@@ -10,19 +10,44 @@ import { SearchIcon } from '@chakra-ui/icons';
 import TrendingSearchFeature from '../components/TrendingSearchFeature'
 import { useState, forwardRef, useRef, useEffect } from 'react';
 import SearchResults from '../components/SearchResults'
+import { supabase } from '../../lib/supabaseClient';
 
 const SearchFeature = forwardRef((props, ref) => {
   const inputWidth = { base: '100vw', md: '905px' };
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
-
   const [inputValue, setInputValue] = useState('');
   const [showTrending, setShowTrending] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
-  const handleInputChange = (event) => {
+  const fetchSearchResults = async (query) => {
+    const { data, error } = await supabase
+      .from('coloring_pages')
+      .select('*')
+      .ilike('title', `%${query}%`);
+    
+    if (error) {
+      console.error("Error fetching search results:", error.message);
+      return [];
+    }
+    return data;
+  }
+  
+
+
+  const handleInputChange = async (event) => {
     setInputValue(event.target.value);
-    setShowTrending(event.target.value === '');
+    
+    if (event.target.value) {
+      const results = await fetchSearchResults(event.target.value);
+      setSearchResults(results);
+      setShowTrending(false);
+    } else {
+      setSearchResults([]);
+      setShowTrending(true);
+    }
   };
+  
 
   const handleInputFocus = () => {
     setIsOpen(true);
@@ -42,6 +67,8 @@ const SearchFeature = forwardRef((props, ref) => {
   }, []);
 
   SearchFeature.displayName = 'SearchFeature';  // Add this line
+
+  console.log("searchResults in Parent Component:", searchResults);
 
   return (
     <Box width="full" px={4} ref={containerRef} position='relative'  zIndex="1000" >
@@ -75,10 +102,10 @@ const SearchFeature = forwardRef((props, ref) => {
           boxShadow='dark-lg'
         >
           {showTrending ? (
-            <TrendingSearchFeature />
-          ) : (
-            <Box><SearchResults /></Box>
-          )}
+    <TrendingSearchFeature />
+  ) : (
+    <SearchResults results={searchResults} />
+  )}
           <Flex
             direction="row"
             overflowX={{ base: "auto", md: "visible" }}

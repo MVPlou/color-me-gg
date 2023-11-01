@@ -30,7 +30,7 @@ import ColoringPageSkeleton from "../../components/ColoringPageSkeleton";
 interface ColoringPages {
   id: string;
   title: string;
-  thumbnail_imageurl: string;
+  imageurl: string;
   description: string;
   // ... any other properties you might want to add ...
 };
@@ -158,7 +158,7 @@ export default function ColoringPageComponent() {
                 <BreadcrumbLink href="/">Home</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/catergories">Coloring Pages</BreadcrumbLink>
+                <BreadcrumbLink href="/categories">Coloring Pages</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem isCurrentPage>
                 <BreadcrumbLink href="#">{currentPage.title}</BreadcrumbLink>
@@ -178,7 +178,7 @@ export default function ColoringPageComponent() {
               <VStack spacing={1} width="full" alignItems="center">
                 {/* Image with onClick event to open the modal */}
                 <Image
-                 src={currentPage.thumbnail_imageurl}
+                 src={currentPage.imageurl}
                  alt={currentPage.title}
                   w={{ base: "100%", md: "540px" }}
                   h='600px'
@@ -239,7 +239,7 @@ export default function ColoringPageComponent() {
           <ModalCloseButton />
           <ModalBody>
             <Image
-              src={currentPage.thumbnail_imageurl}
+              src={currentPage.imageurl}
               alt={currentPage.title}
               width="80vh" // set width to auto
               height="80vh"
