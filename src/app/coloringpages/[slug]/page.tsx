@@ -28,6 +28,7 @@ import ColoringPageSkeleton from "../../components/ColoringPageSkeleton";
 
 
 interface ColoringPages {
+  categoryId: any;
   id: string;
   title: string;
   imageurl: string;
@@ -42,9 +43,10 @@ export default function ColoringPageComponent() {
   const [coloringPages, setColoringPages] = useState<ColoringPages[]>([]);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const currentPage = coloringPages[currentPageIndex] || {};
-
-
   const { slug } = useParams(); 
+  const currentPageCategoryId = currentPage.categoryId;
+
+
 
   useEffect(() => {
     const fetchColoringPages = async () => {
@@ -258,7 +260,8 @@ export default function ColoringPageComponent() {
         mb='200px' // Optional: Add some margin-top for spacing
         
       >
-        {/* <SimilarPages /> */}
+        <SimilarPages categoryId={currentPageCategoryId} />
+
       </Flex>
     </>
   );
