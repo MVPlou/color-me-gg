@@ -156,7 +156,7 @@ const SearchFeature = forwardRef((props, ref) => {
         }}
       >
        {["Halloween", "Animals", "Disney", "Kids", "Adults", "Christmas", "Valentines" ].map((category, index) => (
-  <Link key={index} href={`/categories/${category.toLowerCase()}`} passHref>
+  <Link key={index} href={`/categories/${category}`} passHref>
     <Button  mr={2} px={3} fontSize="xs" minWidth="auto" maxWidth="150px" variant='solid' colorScheme="cyan" boxShadow='lg'>
       {category}
     </Button>

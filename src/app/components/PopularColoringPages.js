@@ -23,7 +23,9 @@ export default function PopularColoringPages({ coloringPages }) {
         mt={2}
         p={4}
       >
+        <h1>
         Trending Coloring Pages
+        </h1>
       </Text>
 
       <Grid
