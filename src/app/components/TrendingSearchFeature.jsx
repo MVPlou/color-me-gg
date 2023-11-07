@@ -1,49 +1,48 @@
-import { Flex, Box, Text, VStack, Image } from "@chakra-ui/react";
-
-
+import { Box, Text, SimpleGrid, Image } from "@chakra-ui/react";
+import { useState, useEffect } from 'react';
+import { supabase } from '../../lib/supabaseClient'; // Ensure the path is correct
 
 export default function TrendingSearchFeature() {
-    // Sample array of image URLs. Replace with actual data.
-    const trendingImages = [
+    const [trendingPages, setTrendingPages] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-      // ... add more image paths
-    ];
-  
+    // Fetch trending categories on component mount
+    useEffect(() => {
+        const fetchTrendingPages = async () => {
+            setIsLoading(true); // Start loading
+            const { data, error } = await supabase
+                .from('categories')
+                .select('*')
+                .is('parent_id', null) // Only parent categories
+                .order('name', { ascending: true })
+                .limit(15); // Limit the results to 15
+            
+            if (error) {
+                console.error("Error fetching trending categories:", error.message);
+            } else {
+                setTrendingPages(data);
+            }
+            setIsLoading(false); // End loading
+        };
+
+        fetchTrendingPages();
+    }, []);
+
     return (
       <Box width="full" px={4}>
-        <Text fontSize="md" fontWeight="bold" mb={4} textAlign="center">Trending Pages</Text>
-        <Flex 
-          overflowX="auto" 
-          py={4} 
-          px={2} 
-          direction="row" 
-          spacing={4} 
-
-          justifyContent="flex-start"  // Adjust to flex-start to align items at the start
-        >
-          {trendingImages.map((imgSrc, index) => (
-            <VStack 
-              key={index} 
-              spacing={2} 
-              alignItems="center"
-              borderRadius="md"
-              boxShadow="0 0 0 0 #755771" // Initial box-shadow value
-              transition="box-shadow 0.3s ease-in-out" // Smooth transition
-              _hover={{
-                boxShadow: "0 0 10px #755771, 0 0 20px #755771, 0 0 30px #755771, 0 0 40px #755771",
-                zIndex: 1  // This will ensure the hovered item is on top of the other images
-              }}
-              minWidth="200px" // Ensure a minimum width for each item
-              maxWidth="200px" // Ensure a maximum width for each item
-            >
-              <Box boxSize="190px" borderRadius="lg">
-                <Image src={imgSrc} alt={`Trending Image ${index}`} width="200" height="150" />
-              </Box>
-              <Text>Image {index + 1}</Text> {/* This is the text box below the image */}
-            </VStack>
-            
-          ))}
-        </Flex>
+        <Text fontSize="md" fontWeight="bold" mb={4} textAlign="center">Trending Coloring Pages</Text>
+        {isLoading ? (
+            <Text>Loading...</Text>
+        ) : (
+            <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 5 }} spacing={4}>
+                {trendingPages.map((page) => (
+                    <Box key={page.id} p={2} boxShadow="sm" borderRadius="md">
+                        <Image src={page.thumbnail_imageurl} alt={page.title} boxSize="full" borderRadius="lg" />
+                        <Text mt={2} fontSize="sm" textAlign="center">{page.title}</Text>
+                    </Box>
+                ))}
+            </SimpleGrid>
+        )}
       </Box>
     );
 }

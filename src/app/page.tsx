@@ -1,5 +1,4 @@
 "use client"
-
 import { 
   Box, 
   Flex,
@@ -12,59 +11,9 @@ import AnimalPages from './components/AnimalPages';
 import GamingPages from './components/GamingPages';
 
 
-
-
 export default function Home() {
 
-  const popularPages = [
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
-    { name: 'lion.pdf', type: 'animals' },
- 
-   
-    // Add more popular pages as needed
-  ];
+
   const recentlyAddedPages = [
     { name: 'car.pdf', type: 'cars' },
     { name: 'car.pdf', type: 'cars' },
@@ -202,7 +151,7 @@ export default function Home() {
         </Box>
         </Flex>
         <Box >
-        <PopularColoringPages className='pt-4' coloringPages={popularPages} />
+        <PopularColoringPages coloringPages={PopularColoringPages} />
         </Box>
         <Box>
           <GamingPages coloringPages={gamingPages} />

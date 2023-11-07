@@ -21,7 +21,7 @@
     "@supabase/supabase-js": "^2.38.1",
     "framer-motion": "^10.16.4",
     "next": "latest",
-    "next-seo": "^6.1.0",
+    "next-seo": "^6.4.0",
     "react": "latest",
     "react-dom": "latest",
     "react-icons": "^4.11.0"

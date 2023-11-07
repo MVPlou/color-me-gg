@@ -1,16 +1,42 @@
-import { Grid, Flex, Text, Button } from '@chakra-ui/react';
-import { useState } from 'react'; // Import useState
+import { Box, Flex, Grid, Text, Button, Container, Spinner, Image } from '@chakra-ui/react';
+
+import { useState, useEffect } from 'react';
+import { supabase } from '../../lib/supabaseClient'; // Ensure the path is correct
+import Link from 'next/link';
 
 export default function PopularColoringPages({ coloringPages }) {
- // State to handle the number of items displayed
- const [itemsToShow, setItemsToShow] = useState(20); // Default to show 10 items
+  // State to handle categories
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // State to handle the number of coloring pages displayed
+  const [itemsToShow, setItemsToShow] = useState(10); // Default to show 20 items
+
+  // Fetch categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setIsLoading(true); // Start loading
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .is('parent_id', null) // Only parent categories
+        .order('name', { ascending: true });
+      
+      if (error) {
+        console.error("Error fetching categories:", error.message);
+      } else {
+        setCategories(data);
+      }
+      setIsLoading(false); // End loading
+    };
+
+    fetchCategories();
+  }, []);
 
  // Handle the Show More click
  const handleShowMore = () => {
    setItemsToShow(itemsToShow + 10); // Show 10 more items each time
  };
-
-
 
   return (
     <Flex direction="column" alignItems="center" width="100%">
@@ -23,9 +49,7 @@ export default function PopularColoringPages({ coloringPages }) {
         mt={2}
         p={4}
       >
-        <h1>
-        Trending Coloring Pages
-        </h1>
+    Trending Coloring Pages
       </Text>
 
       <Grid
@@ -37,22 +61,26 @@ export default function PopularColoringPages({ coloringPages }) {
         borderRadius="md" // Optional: Rounded corners for the grid
         boxShadow='dark-lg'
       >
-        {coloringPages.slice(0, itemsToShow).map((page, index) => (
-          <Flex className='pt-3'
-            key={index}
-            width={{ base: '180px', sm: '180px', md: '140px', lg: '160px' }}
-            height={{ base: '220px', sm: '220px', md: '180px', lg: '200px' }}
-            bg="white"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="column"
-            borderRadius="xl"
-            boxShadow='lg'
-  
-          >
-            {page.name}
-          </Flex>
-        ))}
+        {categories.slice(0, itemsToShow).map((category) => (
+  <Link key={category.id} href={`/categories/${category.slug}`} passHref>
+    <Flex
+     
+      className='pt-3'
+      direction="column"
+      alignItems="center"
+      width={{ base: '180px', sm: '180px', md: '140px', lg: '170px' }}
+      height={{ base: '220px', sm: '220px', md: '180px', lg: '260px' }}
+      
+      // ... other Flex props
+    >
+      {category.thumbnail_imageurl && <Image src={category.thumbnail_imageurl} alt={category.name} h='300px'  borderRadius="xl"
+            boxShadow='lg' mb={2} />}
+      <Text>
+        {category.name} ({category.count})
+      </Text>
+    </Flex>
+  </Link>
+))}
       </Grid>
 
       {itemsToShow < coloringPages.length && (

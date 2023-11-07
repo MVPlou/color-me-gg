@@ -3,8 +3,6 @@ import {
   Flex,
   Box,
   Text,
-  IconButton,
-  Icon,
   Image,
   Button,
   Breadcrumb,
@@ -19,12 +17,9 @@ import SimilarPages from "../../components/SimilarPages";
 import { useState, useEffect } from "react";
 import { supabase } from "../../../lib/supabaseClient";
 import StatsCard from "../../components/StatsCard";
-import DescriptionBox from "../../components/DescriptionBox";
-import ColoringPagesList from "../../components/ColoringPagesList";
+
 import { usePathname, useSearchParams, useParams } from "next/navigation";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { NextSeo } from "next-seo";
-import ColoringPageSkeleton from "../../components/ColoringPageSkeleton";
+
 
 
 interface ColoringPages {
@@ -100,10 +95,6 @@ export default function ColoringPageComponent() {
 
   return (
     <>
-   <NextSeo
-        title="Your Dynamic Title Here" // You can also set the title dynamically
-        description="Dynamic Desc"
-      />
       <Flex
         direction="column"
         justify="center"
@@ -112,7 +103,7 @@ export default function ColoringPageComponent() {
         mb={2}
         pt={{ base: "100px", md: "20px" }}
       >
-        <Box maxW={{ base: "100%", sm: "80%", md: "1200px" }}>
+        <Box maxW={{ base: "100%", sm: "80%", md: "1200px" }} >
           <SearchFeature />
         </Box>
       </Flex>
@@ -135,7 +126,7 @@ export default function ColoringPageComponent() {
             spacing={3} 
             bg='cyan.200'
             borderRadius="lg"
-            h='849px'
+            
             p={4}
             mb={{ base: 4, md: 0 }} // Adds bottom margin on smaller screens
           >
@@ -202,7 +193,18 @@ export default function ColoringPageComponent() {
                 </Flex>
               </VStack>
             </Flex>
-            <DescriptionBox text={currentPage.description} />
+            <Box 
+            borderWidth="1px" 
+      borderRadius="lg" 
+      padding="2" 
+      bg='white'
+      w={{ base: "100%", md: "540px" }} 
+      boxShadow='dark-lg'
+        p='2'>
+              <h1>
+              {currentPage.description}
+              </h1>
+              </Box>
           </VStack>
         </Flex>
         {/*Ad and Stats*/}
@@ -212,6 +214,7 @@ export default function ColoringPageComponent() {
         p={2}
         m={2}
         >
+          <StatsCard />
           {/* Ad Box */}
           <Box
             width="300px"
@@ -230,7 +233,6 @@ export default function ColoringPageComponent() {
             <Text>Advertisement</Text>{" "}
             {/* Placeholder text, replace with your ad content */}
           </Box>
-          <StatsCard />
         </VStack>
         {/* <ColoringPagesList /> */}
       </Flex>

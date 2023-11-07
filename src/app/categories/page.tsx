@@ -5,7 +5,7 @@ import CategoriesComponent from '../components/CategoriesComponent';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';  // Ensure the path is correct
 import { Spinner } from '@chakra-ui/react';
-import Head from 'next/head';
+
 
 
 export default function Categories() {
@@ -33,12 +33,8 @@ export default function Categories() {
     
     fetchCategories();
   }, []);
-
   return (
     <>
-     <Head>
-        <title>Categories</title>  {/* Set the page title here */}
-      </Head>
       <Container pt={3} width="full" centerContent>
         <Flex
           direction="column"
@@ -57,19 +53,14 @@ export default function Categories() {
     
         </Flex>
         <Box>
-        <Text 
-        fontSize={{ base: 'xl', sm: '2xl', md: '3xl', lg: '4xl' }}
-        fontFamily="monospace"
-        fontWeight="bold" 
-        textAlign="center" 
-        mb={1}
-        mt={1}
-        p={1}
+        <h1
+  
+       
       >
-        <h1>
+     
         Categories
-        </h1>
-      </Text>
+    
+      </h1>
           {isLoading ? (
             <Flex justify="center" align="center" height="200px"> 
               <Spinner size="xl" />  {/* Spinner shown while loading */}
