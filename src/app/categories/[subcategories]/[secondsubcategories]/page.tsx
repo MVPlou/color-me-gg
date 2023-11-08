@@ -7,45 +7,35 @@ import { supabase } from '../../../../lib/supabaseClient';  // Ensure the path i
 import { Spinner } from '@chakra-ui/react';
 import { useParams } from "next/navigation";
 
-export default function SecondSubCategories() {
-  const [subSecondCategories, setSecondSubCategories] = useState<any[]>([]);
+const SecondSubCategories = () => {
+  const [secondSubCategories, setSecondSubCategories] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { secondsubcategories } = useParams();
-
+  const params = useParams(); // Using useParams hook
 
   useEffect(() => {
-    const fetchSecondSubCategories = async () => {
-      // if (!category) return; // Don't fetch if category slug is not yet available
+    // Convert params to string or handle the undefined case
+    const subParentId = params.secondSubCategoryId as string; // Use the correct param key here
 
-      setIsLoading(true);
-      
-      // First, get the ID of the parent category with the given slug
-      const { data: parentCategory } = await supabase
-        .from('categories')
-        .select('id')
-        .eq('slug', secondsubcategories);
-  
-      if (parentCategory && parentCategory.length > 0) {
-        const parentId = parentCategory[0].id;
-  
-        // Fetch sub-categories using the parent ID
-        const { data, error } = await supabase
-          .from('coloring_pages')
-          .select('*')
-          .eq('parent_id', parentId)
-          .order('name', { ascending: true });
-  
-        if (error) {
-          console.error("Error fetching sub-categories:", error.message);
-        } else {
-          setSecondSubCategories(data);
-        }
-      }
-      setIsLoading(false);
-    };
-    
-    fetchSecondSubCategories();
-  }, [secondsubcategories]); 
+    if (!subParentId) return; // if subParentId is undefined, don't fetch
+
+ 
+    fetchSecondSubcategories(subParentId).finally(() => setIsLoading(false));
+  }, [params.secondsubcategory]); // Dependency array on the specific param key for second-level subcategories
+
+  async function fetchSecondSubcategories(subParentId: string) {
+    const { data, error } = await supabase
+      .from('categories') // This might be a different table or query if it's for second-level subcategories
+      .select('*')
+      .eq('parent_id', subParentId) // Ensure this is the correct column for second-level subcategories
+      .order('name', { ascending: true });
+
+    if (error) {
+      console.error("Error fetching second level subcategories:", error.message);
+    } else {
+      setSecondSubCategories(data);
+    }
+  }
+
   
   return (
     <>
@@ -71,7 +61,7 @@ export default function SecondSubCategories() {
               <Spinner size="xl" />
             </Flex>
           ) : (
-            <CategoriesComponent categories={subSecondCategories} title={''} />
+            <CategoriesComponent categories={secondSubCategories} title={''} />
 
           )}
         </Box>
@@ -79,3 +69,5 @@ export default function SecondSubCategories() {
     </>
   );
 }
+
+export default SecondSubCategories;

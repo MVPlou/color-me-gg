@@ -1,6 +1,29 @@
 import { Box, Text, Button, Link } from "@chakra-ui/react";
+import { useState, useEffect } from 'react';
+import { supabase } from '../../lib/supabaseClient'; 
 
-const StatsCard = () => {
+
+const StatsCard = ({ pageId }) => {
+  const [likes, setLikes] = useState(0);
+
+  // Fetch likes when component mounts
+  useEffect(() => {
+    const fetchLikes = async () => {
+      const { data, error } = await supabase
+        .from('likes')
+        .select('id')
+        .eq('coloringpageid', pageId); // Replace 'page_id' with the actual column name in your 'likes' table
+
+      if (error) {
+        console.error('Error fetching likes', error);
+      } else {
+        setLikes(data.length); // Assuming each row in 'likes' represents a like
+      }
+    };
+
+    fetchLikes();
+  }, [pageId]); 
+
   return (
     <Box 
       borderWidth="1px" 
@@ -55,7 +78,7 @@ const StatsCard = () => {
         borderBottomWidth="1px"
         pb="2"
       >
-        Likes: 
+       Likes: 
         <Text 
           as="span" 
           fontWeight="normal" 
@@ -63,7 +86,7 @@ const StatsCard = () => {
           ml="2"
           borderBottomWidth="1px"
         >
-          323
+          {likes} {/* Dynamic likes count */}
         </Text>
       </Text>
 
