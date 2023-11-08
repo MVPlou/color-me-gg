@@ -214,7 +214,7 @@ export default function ColoringPageComponent() {
         p={2}
         m={2}
         >
-          <StatsCard />
+          <StatsCard pageId={undefined} />
           {/* Ad Box */}
           <Box
             width="300px"
