@@ -24,7 +24,8 @@
     "next-seo": "^6.4.0",
     "react": "latest",
     "react-dom": "latest",
-    "react-icons": "^4.11.0"
+    "react-icons": "^4.11.0",
+    "react-infinite-scroll-component": "^6.1.0"
   },
   "devDependencies": {
     "@types/next": "^9.0.0",

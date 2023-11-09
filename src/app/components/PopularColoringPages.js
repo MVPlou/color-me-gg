@@ -63,7 +63,7 @@ export default function PopularColoringPages({ coloringPages }) {
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                width={{ base: '200px', sm: '200px', md: '170px', lg: '170px' }}
+                width={{ base: '170px', sm: '170px', md: '170px', lg: '170px' }}
                 height={{ base: '230px', sm: '230px', md: '230px', lg: '230px' }}
                 bg="gray.100" // Background color for the Flex container
                 borderRadius="md" // Optional: Rounded corners for the Flex container
