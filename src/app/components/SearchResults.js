@@ -34,9 +34,9 @@ function SearchResults({ results, query }) {
               spacing={1}
               alignItems="center"
               borderRadius='12px'
-              boxShadow="0 0 0 0 #ff00de"
+              boxShadow="0 0 0 0 #000000"
               _hover={{
-                boxShadow: '0 0 0 1px #ff00de',
+                boxShadow: '0 0 0 1px #000000',
               }}
             >
               <AspectRatio ratio={1} width="210px">

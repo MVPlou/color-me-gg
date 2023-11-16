@@ -67,7 +67,7 @@ const CategoriesComponent: React.FC<CategoriesComponentProps> = ({ categories })
       {category.thumbnail_imageurl && <Image src={category.thumbnail_imageurl} alt={category.name} h='300px'  borderRadius="xl"
             boxShadow='lg' mb={2} />}
       <Text>
-      
+        {category.name} ({category.count})
       </Text>
     </Flex>
   </Link>

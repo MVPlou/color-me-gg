@@ -53,14 +53,17 @@ export default function Categories() {
     
         </Flex>
         <Box>
-        <h1
-  
-       
+        <Text 
+        fontSize={{ base: 'xl', sm: '2xl', md: '3xl', lg: '4xl' }}
+        fontFamily="monospace"
+        fontWeight="bold" 
+        textAlign="center" 
+        mb={2}
+        mt={2}
+        p={4}
       >
-     
-        Categories
-    
-      </h1>
+      Categories
+      </Text>
           {isLoading ? (
             <Flex justify="center" align="center" height="200px"> 
               <Spinner size="xl" />  {/* Spinner shown while loading */}

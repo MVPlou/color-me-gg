@@ -20,6 +20,8 @@ import {
   FiCompass,
   FiStar,
   FiSettings,
+  FiChevronRight,
+  FiChevronLeft,
   FiMenu,
   FiGrid,
   FiEdit2,
@@ -27,6 +29,7 @@ import {
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import Link from 'next/link'
+import Image from 'next/image'
 
 
 interface LinkItemProps {
@@ -39,22 +42,22 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Categories', icon: FiGrid },
   // { name: 'ColoringPages/1', icon: FiEdit2 },
 
- 
-]
+];
 
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isSidebarOpen, setSidebarOpen] = React.useState(false); // Add this line
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
 
+  // Corrected function to toggle the sidebar's collapsed state
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  // Corrected function to handle opening the sidebar
   const handleOpen = () => {
     console.log("Opening drawer...");
     onOpen();
-    setSidebarOpen(true); // Add this line
-  };
-
-  const handleSidebarClose = () => { // Add this function
-    onClose();
-    setSidebarOpen(false);
+    toggleCollapse(); // Corrected this line
   };
 
   return (
@@ -63,7 +66,12 @@ export default function Sidebar() {
     position="fixed"
     
     >
-      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+      <SidebarContent 
+        onClose={() => onClose} 
+        display={{ base: 'none', md: 'block' }} 
+        toggleCollapse={toggleCollapse} 
+        isCollapsed={isCollapsed}
+      />
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -74,7 +82,9 @@ export default function Sidebar() {
         <DrawerContent
   
         >
-          <SidebarContent onClose={onClose} />
+          <SidebarContent onClose={onClose} isCollapsed={false} toggleCollapse={function (): void {
+            throw new Error('Function not implemented.')
+          } } />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
@@ -87,39 +97,52 @@ export default function Sidebar() {
 }
 
 interface SidebarProps extends BoxProps {
-  onClose: () => void
+  onClose: () => void;
+  toggleCollapse: () => void;  // Add this line
+  isCollapsed: boolean;        // Add this line
 }
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, toggleCollapse, isCollapsed, ...rest }: SidebarProps) => {
   return (
     <Box
-      bg={useColorModeValue('white', 'gray.900')}
+    bg={useColorModeValue('white', 'gray.900')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: 60 }}
+      w={{ base: 'full', md: isCollapsed ? 20 : 60 }} // Modified this line
       pos="fixed"
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-         ColorMe.GG
-        </Text>
+        <Image src='/public/colorme.gg.png' width={20} alt='logo' height={20} />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
+  <NavItem key={link.name} icon={link.icon} isCollapsed={isCollapsed}> 
+    {link.name}
+  </NavItem>
+))}
+<Flex 
+justify="center"
+bottom='0'
+>
+<IconButton
+          display={{ base: 'none', md: 'flex' }}
+          onClick={toggleCollapse}
+          aria-label="Collapse sidebar"
+          icon={isCollapsed ? <FiChevronRight /> : <FiChevronLeft />}
+          alignSelf={isCollapsed ? 'center' : 'flex-start'} // Center if collapsed
+        />
+        </Flex>
     </Box>
   )
 }
 
 interface NavItemProps extends FlexProps {
-  icon: IconType
-  children: ReactText
+  icon: IconType;
+  children: ReactText;
+  isCollapsed: boolean;  // Add this line
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, isCollapsed, ...rest }: NavItemProps) => {
   if (typeof children !== 'string') {
     // Handle the case where children is not a string, if necessary
     return null;
@@ -128,21 +151,21 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
   const linkPath = children === 'Home' ? '/' : `/${children.toLowerCase()}`;
   return (
     <Link href={linkPath} passHref>
-      <Box  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-        <Flex
-          align="center"
-          p="4"
-          mx="4"
-          borderRadius="lg"
-          role="group"
-          cursor="pointer"
-          _hover={{
-            bg: 'cyan.400',
-            color: 'white',
-          }}
+    <Box style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+      <Flex
+        align="center"
+        p="4"
+        mx="4"
+        borderRadius="lg"
+        role="group"
+        cursor="pointer"
+        _hover={{
+          bg: 'cyan.400',
+          color: 'white',
+        }}
           {...rest}
         >
-          {icon && (
+       {icon && (
             <Icon
               mr="4"
               fontSize="16"
@@ -152,12 +175,12 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
               as={icon}
             />
           )}
-          {children}
+          {!isCollapsed && children}
         </Flex>
       </Box>
     </Link>
   );
-}
+};
 
 
 interface MobileProps extends FlexProps {

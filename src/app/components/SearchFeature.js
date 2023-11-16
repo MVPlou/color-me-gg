@@ -5,6 +5,7 @@ import {
   InputLeftElement,
   Flex,
   Button,
+  Text
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import TrendingSearchFeature from '../components/TrendingSearchFeature'
@@ -15,7 +16,7 @@ import Link from 'next/link';
 
 
 const SearchFeature = forwardRef((props, ref) => {
-  const inputWidth = { base: '100vw', md: '905px' };
+  const inputWidth = { base: '360px', sm:'460px', md: '905px' };
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
@@ -35,7 +36,6 @@ const SearchFeature = forwardRef((props, ref) => {
     return data;
   }
   
-
 
   const handleInputChange = async (event) => {
     setInputValue(event.target.value);
@@ -80,7 +80,7 @@ const SearchFeature = forwardRef((props, ref) => {
       </InputLeftElement>
         <Input
           ref={ref}
-          placeholder="Search for coloring pages..."
+          placeholder="Search over 1000 free coloring pages...."
           py={6}
           fontSize="xl"
           w={inputWidth}
@@ -93,7 +93,7 @@ const SearchFeature = forwardRef((props, ref) => {
       {isOpen && (
         <Box
           w={inputWidth}
-          h='80vh'
+          
           bg='gray.100'
          
           p={4}

@@ -19,6 +19,7 @@
     "@popperjs/core": "^2.11.8",
     "@supabase/auth-helpers-nextjs": "^0.8.1",
     "@supabase/supabase-js": "^2.38.1",
+    "@vercel/toolbar": "^0.1.5",
     "framer-motion": "^10.16.4",
     "next": "latest",
     "next-seo": "^6.4.0",
